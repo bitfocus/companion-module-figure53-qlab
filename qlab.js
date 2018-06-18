@@ -47,6 +47,18 @@ instance.prototype.destroy = function() {
 instance.prototype.actions = function(system) {
 	var self = this;
 	self.system.emit('instance_actions', self.id, {
+		'start':	{
+			 label: 'Start (cue)',
+			 options: [
+ 				{
+ 					 type: 'textinput',
+ 					 label: 'Cue',
+ 					 id: 'cue',
+ 					 default: "1"
+				 }
+			 ]
+			 },
+
 		'go':       { label: 'GO' },
 		'pause':    { label: 'Pause' },
 		'stop':     { label: 'Stop' },
@@ -61,27 +73,57 @@ instance.prototype.actions = function(system) {
 instance.prototype.action = function(action) {
 	var self = this;
 	var id = action.action;
+	var cmd
 
-	var osc = {
-		'go':       '/go',
-		'pause':    '/pause',
-		'stop':     '/stop',
-		'panic':    '/panic',
-		'reset':    '/reset',
-		'previous': '/playhead/previous',
-		'next':     '/playhead/next',
-		'resume':   '/resume'
+	switch (action.action) {
+
+		case 'start':
+			cmd = '/cue/'+ action.options.cue + '/start';
+			break;
+
+		case 'go':
+			cmd = '/go';
+			break;
+
+		case 'pause':
+			cmd = '/pause';
+			break;
+
+		case 'stop':
+			cmd = '/stop';
+			break;
+
+		case 'panic':
+			cmd = '/panic';
+			break;
+
+		case 'reset':
+			cmd = '/reset';
+			break;
+
+		case 'previous':
+			cmd = '/playhead/previous';
+			break;
+
+		case 'next':
+			cmd = '/playhead/next';
+			break;
+
+		case 'resume':
+			cmd = '/resume';
+			break;
+
 	};
-	if (osc[id] !== undefined) {
-		debug('sending',osc[id],"to",self.config.host);
-		self.system.emit('osc_send', self.config.host, 53000, osc[id], [])
+	if (cmd !== undefined) {
+		debug('sending',cmd,"to",self.config.host);
+		self.system.emit('osc_send', self.config.host, 53000, cmd, [])
 	}
 };
 
 instance.module_info = {
 	label: 'Qlab',
 	id: 'qlab',
-	version: '0.0.1'
+	version: '0.0.2'
 };
 
 instance_skel.extendedBy(instance);
