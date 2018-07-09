@@ -4,9 +4,9 @@ What does QLab do?
 QLab makes it simple to create intricate designs of light, sound, and video, which you play back during a live performance.
 QLab allows you to lock in exactly how you want the light, sound, and video to play during your performance. When you’re done designing, you'll switch to “show mode” and run your show just by pressing “GO”.
 
-go over to [figure 53](https://figure53.com/)and checkout the software.
+Go over to [figure 53](https://figure53.com/) and checkout the software.
 
-We currently support the following functions.
+We currently support the following actions.
 
 Qlab command| what i does.
 ------------ | -------------
@@ -19,3 +19,15 @@ Reset| Reset the workspace. Resetting stops all cues, returns the playhead to th
 Next| Move the selection down one cue.
 Previous| Move the selection up one cue.
 Start (cue)| Start the specified cue. If the specified cue is playing, this command has no effect.
+Increase Prewait| Increases the prewait time by given time for the selected cue
+Decrease Prewait| Decreases the prewait time by given time for the selected cue
+Increase postwait| Increases the postwait time by given time for the selected cue
+Decrease postwait| Decreases the postwait time by given time for the selected cue
+Increase Duration| Increases the duration time by given time for the selected cue
+Decrease duration| Decreases the duration time by given time for the selected cue
+Set/Unset Arm| Set / Unset the Arm property of the selected cue
+Set/Unset Autoload| Set / Unset the Autoload property of the selected cue
+Set Continue Mode| Sets the continue mode of the selected cue
+Set Cue Color| Sets the color of the selected cue
+
+for additional actions please raise a feature request at [github](https://github.com/bitfocus/companion)
