@@ -28,11 +28,11 @@ instance.prototype.config_fields = function () {
 	var self = this;
 	return [
 		{
-		type: 'text',
-		id: 'info',
-		width: 12,
-		label: 'Information',
-		value: 'This module controls Qlab by <a href="https://figure53.com/" target="_new">Figure 53</a>.'
+			type: 'text',
+			id: 'info',
+			width: 12,
+			label: 'Information',
+			value: 'This module controls Qlab by <a href="https://figure53.com/" target="_new">Figure 53</a>.'
 		},
 		{
 			type: 'textinput',
@@ -208,7 +208,6 @@ instance.prototype.actions = function(system) {
 
 instance.prototype.action = function(action) {
 	var self = this;
-	var id = action.action;
 	var opt = action.options;
 	var cmd
 
