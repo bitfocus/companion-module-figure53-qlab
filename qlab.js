@@ -180,6 +180,17 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
+		'flagged':	{
+			label: 'Flagged/Unflagged Cue',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Flagged',
+					id: 'flaggId',
+					choices: [ { id: '0', label: 'Disable' }, { id: '1', label: 'Enable' } ]
+				}
+			]
+		},
 		'cueColor':	{
 			label: 'Set Selected Cue Color',
 			options: [
@@ -202,7 +213,8 @@ instance.prototype.actions = function(system) {
 		'reset':    { label: 'Reset' },
 		'previous': { label: 'Previous Cue' },
 		'next':     { label: 'Next Cue' },
-		'resume':   { label: 'Resume' }
+		'resume':   { label: 'Resume' },
+		'load':     { label: 'Load Cue'}
 	});
 }
 
@@ -256,6 +268,11 @@ instance.prototype.action = function(action) {
 		case 'resume':
 			arg = null
 			cmd = '/resume';
+			break;
+
+		case 'load':
+			arg = null
+			cmd = '/cue/selected/load';
 			break;
 
 		case 'prewait_dec':
@@ -328,6 +345,14 @@ instance.prototype.action = function(action) {
 				value: parseInt(opt.autoId)
 			}
 			cmd = '/cue/selected/autoLoad';
+			break;
+
+		case 'flagged':
+			var arg = {
+				type: "i",
+				value: parseInt(opt.flaggId)
+			}
+			cmd = '/cue/selected/flagged';
 			break;
 
 		case 'cueColor':
