@@ -41,6 +41,13 @@ instance.prototype.config_fields = function () {
 			width: 6,
 			tooltip: 'The IP of the computer running QLab',
 			regex: self.REGEX_IP
+		},
+		{
+			type: 'textinput',
+			id: 'passcode',
+			label: 'OSC Pascode',
+			width: 12,
+			tooltip: 'The passcode for controling QLab, leave blank if not set any'
 		}
 	]
 };
@@ -209,7 +216,10 @@ instance.prototype.actions = function(system) {
 instance.prototype.action = function(action) {
 	var self = this;
 	var opt = action.options;
-	var cmd
+	var cmd;
+	var passcode = 	{
+		type: "s", value: self.config.passcode
+	};
 
 	switch (action.action) {
 
@@ -343,11 +353,15 @@ instance.prototype.action = function(action) {
 	};
 	if (cmd !== undefined && arg !== null)  {
 		debug('sending',cmd,arg,"to",self.config.host);
+		self.system.emit('osc_send', self.config.host, 53000, "/connect", [ passcode ]);
 		self.system.emit('osc_send', self.config.host, 53000, cmd, [arg])
+		self.system.emit('osc_send', self.config.host, 53000, "/disconnect", []);
 	}
 	else if (cmd !== undefined && arg == null)  {
 		debug('sending',cmd,"to",self.config.host);
+		self.system.emit('osc_send', self.config.host, 53000, "/connect", [ passcode ]);
 		self.system.emit('osc_send', self.config.host, 53000, cmd, [])
+		self.system.emit('osc_send', self.config.host, 53000, "/disconnect", []);
 	}
 };
 
