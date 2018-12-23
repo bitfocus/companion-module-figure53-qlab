@@ -218,7 +218,7 @@ instance.prototype.action = function(action) {
 	var opt = action.options;
 	var cmd;
 	var passcode = 	{
-		type: "s", value: self.config.passcode
+		type: "s", value: self.config.passcode || ""
 	};
 
 	switch (action.action) {
@@ -355,13 +355,11 @@ instance.prototype.action = function(action) {
 		debug('sending',cmd,arg,"to",self.config.host);
 		self.system.emit('osc_send', self.config.host, 53000, "/connect", [ passcode ]);
 		self.system.emit('osc_send', self.config.host, 53000, cmd, [arg])
-		self.system.emit('osc_send', self.config.host, 53000, "/disconnect", []);
 	}
 	else if (cmd !== undefined && arg == null)  {
 		debug('sending',cmd,"to",self.config.host);
 		self.system.emit('osc_send', self.config.host, 53000, "/connect", [ passcode ]);
 		self.system.emit('osc_send', self.config.host, 53000, cmd, [])
-		self.system.emit('osc_send', self.config.host, 53000, "/disconnect", []);
 	}
 };
 
