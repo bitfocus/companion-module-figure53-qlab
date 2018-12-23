@@ -353,12 +353,16 @@ instance.prototype.action = function(action) {
 	};
 	if (cmd !== undefined && arg !== null)  {
 		debug('sending',cmd,arg,"to",self.config.host);
-		self.system.emit('osc_send', self.config.host, 53000, "/connect", [ passcode ]);
+		if (self.config.passcode !== undefined && self.config.passcode !== "") {
+			self.system.emit('osc_send', self.config.host, 53000, "/connect", [ passcode ]);
+		 }
 		self.system.emit('osc_send', self.config.host, 53000, cmd, [arg])
 	}
 	else if (cmd !== undefined && arg == null)  {
 		debug('sending',cmd,"to",self.config.host);
-		self.system.emit('osc_send', self.config.host, 53000, "/connect", [ passcode ]);
+		if (self.config.passcode !== undefined && self.config.passcode !== "") {
+			self.system.emit('osc_send', self.config.host, 53000, "/connect", [ passcode ]);
+		 }
 		self.system.emit('osc_send', self.config.host, 53000, cmd, [])
 	}
 };
