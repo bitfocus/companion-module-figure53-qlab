@@ -7,7 +7,29 @@ function instance(system, id, config) {
 	// super-constructor
 	instance_skel.apply(this, arguments);
 	self.actions();
-	self.init_presets(); // export actions
+	self.init_presets();
+
+	// some prior button actions were created 
+	// from a preset with a case typo
+	self.addUpgradeScript(function (config, actions) {
+		var changed = false;
+
+		for (var k in actions) {
+			var action = actions[k];
+
+			if (action.action == "autoLoad") {
+				if (action.options.autoId==1) {
+					action.action = "autoload";
+					action.label = action.id + ":" + action.action;
+					changed = true;
+				}
+			}
+
+		}
+
+		return changed;
+	});
+
 	return self;
 }
 
