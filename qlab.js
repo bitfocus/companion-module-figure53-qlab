@@ -1,23 +1,47 @@
 var instance_skel = require('../../instance_skel');
 var debug;
+// eslint-disable-next-line no-unused-vars
 var log;
 
+// eslint-disable-next-line no-unused-vars
 function instance(system, id, config) {
 	var self = this;
 	// super-constructor
 	instance_skel.apply(this, arguments);
 	self.actions();
-	self.init_presets(); // export actions
+	self.init_presets();
+
+	self.addUpgradeScript(function (config, actions) {
+		var changed = false;
+
+		for (var k in actions) {
+			var action = actions[k];
+
+			// some prior button actions were created
+			// from a preset with a case typo
+			if (action.action == "autoLoad") {
+				if (action.options.autoId == 1) {
+					action.action = "autoload";
+					action.label = action.id + ":" + action.action;
+					changed = true;
+				}
+			}
+
+		}
+
+		return changed;
+	});
+
 	return self;
 }
 
-instance.prototype.updateConfig = function(config) {
+instance.prototype.updateConfig = function (config) {
 	var self = this;
 	self.init_presets();
 	self.config = config;
 };
 
-instance.prototype.init = function() {
+instance.prototype.init = function () {
 	var self = this;
 	self.status(self.STATE_OK); // report status ok!
 	self.init_presets();
@@ -51,14 +75,15 @@ instance.prototype.config_fields = function () {
 			width: 12,
 			tooltip: 'The passcode for controling QLab, leave blank if not set any'
 		},
-		{	type: 'textinput',
+		{
+			type: 'textinput',
 			id: 'workspace',
 			label: 'Workspace',
 			width: 12,
 			tooltip: 'Enter the name or ID for the workspace, or use default for the front Workspace',
 			default: 'default'
 		}
-	]
+	];
 };
 
 instance.prototype.init_presets = function () {
@@ -72,8 +97,8 @@ instance.prototype.init_presets = function () {
 				style: 'text',
 				text: 'Pause',
 				size: '18',
-				color: self.rgb(0,0,0),
-				bgcolor: self.rgb(255,255,0),
+				color: self.rgb(0, 0, 0),
+				bgcolor: self.rgb(255, 255, 0),
 
 			},
 			actions: [
@@ -89,8 +114,8 @@ instance.prototype.init_presets = function () {
 				style: 'text',
 				text: 'GO',
 				size: '30',
-				color: self.rgb(0,0,0),
-				bgcolor: self.rgb(0,255,0)
+				color: self.rgb(0, 0, 0),
+				bgcolor: self.rgb(0, 255, 0)
 			},
 			actions: [
 				{
@@ -105,9 +130,8 @@ instance.prototype.init_presets = function () {
 				style: 'text',
 				text: 'Resume',
 				size: '18',
-				color: '16777215',
-				color: self.rgb(0,0,0),
-				bgcolor: self.rgb(0,255,0)
+				color: self.rgb(0, 0, 0),
+				bgcolor: self.rgb(0, 255, 0)
 			},
 			actions: [
 				{
@@ -123,7 +147,7 @@ instance.prototype.init_presets = function () {
 				text: 'Stop',
 				size: '30',
 				color: '16777215',
-				bgcolor: self.rgb(255,0,0)
+				bgcolor: self.rgb(255, 0, 0)
 			},
 			actions: [
 				{
@@ -139,7 +163,7 @@ instance.prototype.init_presets = function () {
 				text: 'Panic',
 				size: '24',
 				color: '16777215',
-				bgcolor: self.rgb(255,0,0)
+				bgcolor: self.rgb(255, 0, 0)
 			},
 			actions: [
 				{
@@ -155,11 +179,27 @@ instance.prototype.init_presets = function () {
 				text: 'Reset',
 				size: '24',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
 					action: 'reset',
+				}
+			]
+		},
+		{
+			category: 'CueList',
+			label: 'Preview',
+			bank: {
+				style: 'text',
+				text: 'Preview',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 128, 0)
+			},
+			actions: [
+				{
+					action: 'preview',
 				}
 			]
 		},
@@ -171,7 +211,7 @@ instance.prototype.init_presets = function () {
 				text: 'Prev\\nCue',
 				size: '24',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -187,7 +227,7 @@ instance.prototype.init_presets = function () {
 				text: 'Next\\nCue',
 				size: '24',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -203,7 +243,7 @@ instance.prototype.init_presets = function () {
 				text: 'Load\\nCue',
 				size: '24',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -218,8 +258,8 @@ instance.prototype.init_presets = function () {
 				style: 'text',
 				text: 'PreWait\\nDecrease\\n1 sec',
 				size: '14',
-				color: self.rgb(255,255,255),
-				bgcolor: self.rgb(0,0,100)
+				color: self.rgb(255, 255, 255),
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -237,8 +277,8 @@ instance.prototype.init_presets = function () {
 				style: 'text',
 				text: 'PreWait\\nDecrease\\n10 sec',
 				size: '14',
-				color: self.rgb(255,255,255),
-				bgcolor: self.rgb(0,0,100)
+				color: self.rgb(255, 255, 255),
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -256,9 +296,8 @@ instance.prototype.init_presets = function () {
 				style: 'text',
 				text: 'PreWait\\nIncrease\\n10 sec',
 				size: '14',
-				color: '16777215',
-				color: self.rgb(255,255,255),
-				bgcolor: self.rgb(0,0,100)
+				color: self.rgb(255, 255, 255),
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -276,8 +315,8 @@ instance.prototype.init_presets = function () {
 				style: 'text',
 				text: 'PreWait\\nIncrease\\n1 sec',
 				size: '14',
-				color: self.rgb(255,255,255),
-				bgcolor: self.rgb(0,0,100)
+				color: self.rgb(255, 255, 255),
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -296,9 +335,8 @@ instance.prototype.init_presets = function () {
 				style: 'text',
 				text: 'PostWait\\nDecrease\\n1 sec',
 				size: '14',
-				color: '16777215',
-				color: self.rgb(255,255,255),
-				bgcolor: self.rgb(0,0,100)
+				color: self.rgb(255, 255, 255),
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -317,7 +355,7 @@ instance.prototype.init_presets = function () {
 				text: 'PostWait\\nDecrease\\n10 sec',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -336,7 +374,7 @@ instance.prototype.init_presets = function () {
 				text: 'PostWait\\nIncrease\\n10sec',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -355,7 +393,7 @@ instance.prototype.init_presets = function () {
 				text: 'PostWait\\nIncrease\\n1 sec',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -375,7 +413,7 @@ instance.prototype.init_presets = function () {
 				text: 'Duration\\nDecrease\\n1 sec',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -394,7 +432,7 @@ instance.prototype.init_presets = function () {
 				text: 'Duration\\nDecrease\\n10sec',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -413,7 +451,7 @@ instance.prototype.init_presets = function () {
 				text: 'Duration\\nIncrease\\n10 sec',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -432,7 +470,7 @@ instance.prototype.init_presets = function () {
 				text: 'Duration\\nIncrease\\n1 sec',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -452,7 +490,7 @@ instance.prototype.init_presets = function () {
 				text: 'Do Not Continue',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -471,7 +509,7 @@ instance.prototype.init_presets = function () {
 				text: 'Auto Continue',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -490,7 +528,7 @@ instance.prototype.init_presets = function () {
 				text: 'Auto Follow',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -509,7 +547,7 @@ instance.prototype.init_presets = function () {
 				text: 'Disarm',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -528,7 +566,7 @@ instance.prototype.init_presets = function () {
 				text: 'Arm',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -547,11 +585,11 @@ instance.prototype.init_presets = function () {
 				text: 'Autoload Enable',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
-					action: 'autoLoad',
+					action: 'autoload',
 					options: {
 						autoId: '1',
 					}
@@ -566,7 +604,7 @@ instance.prototype.init_presets = function () {
 				text: 'Autoload Disable',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -585,7 +623,7 @@ instance.prototype.init_presets = function () {
 				text: 'Flagged',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -604,7 +642,7 @@ instance.prototype.init_presets = function () {
 				text: 'Unflagged',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,100)
+				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
@@ -623,7 +661,7 @@ instance.prototype.init_presets = function () {
 				text: 'Cue Colour',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0)
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
@@ -642,7 +680,7 @@ instance.prototype.init_presets = function () {
 				text: 'Cue Colour',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(255,0,0)
+				bgcolor: self.rgb(255, 0, 0)
 			},
 			actions: [
 				{
@@ -661,7 +699,7 @@ instance.prototype.init_presets = function () {
 				text: 'Cue Colour',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(200,200,0)
+				bgcolor: self.rgb(200, 200, 0)
 			},
 			actions: [
 				{
@@ -680,7 +718,7 @@ instance.prototype.init_presets = function () {
 				text: 'Cue Colour',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,200,0)
+				bgcolor: self.rgb(0, 200, 0)
 			},
 			actions: [
 				{
@@ -699,7 +737,7 @@ instance.prototype.init_presets = function () {
 				text: 'Cue Colour',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,255)
+				bgcolor: self.rgb(0, 0, 255)
 			},
 			actions: [
 				{
@@ -719,7 +757,7 @@ instance.prototype.init_presets = function () {
 				text: 'Cue Colour',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(255,0,255)
+				bgcolor: self.rgb(255, 0, 255)
 			},
 			actions: [
 				{
@@ -733,37 +771,38 @@ instance.prototype.init_presets = function () {
 	];
 
 	self.setPresetDefinitions(presets);
-}
+};
 
 
 
 
 // When module gets deleted
-instance.prototype.destroy = function() {
+instance.prototype.destroy = function () {
 	var self = this;
-	debug("destory", self.id);;
+	debug("destory", self.id);
 };
 
 instance.prototype.continueMode = [
-	{ label: 'Do Not Continue',         id: '0' },
-	{ label: 'Auto Continue',           id: '1' },
-	{ label: 'Auto Follow',             id: '2' }
+	{ label: 'Do Not Continue', id: '0' },
+	{ label: 'Auto Continue', id: '1' },
+	{ label: 'Auto Follow', id: '2' }
 ];
 
 instance.prototype.colorName = [
-	{ label: 'None',                    id: 'none' },
-	{ label: 'Red',                     id: 'red' },
-	{ label: 'Yellow',                  id: 'yellow' },
-	{ label: 'Green',                   id: 'green' },
-	{ label: 'Blue',                    id: 'blue' },
-	{ label: 'Purple',                  id: 'purple' }
+	{ label: 'None', id: 'none' },
+	{ label: 'Red', id: 'red' },
+	{ label: 'Yellow', id: 'yellow' },
+	{ label: 'Green', id: 'green' },
+	{ label: 'Blue', id: 'blue' },
+	{ label: 'Purple', id: 'purple' }
 ];
 
 
-instance.prototype.actions = function(system) {
+// eslint-disable-next-line no-unused-vars
+instance.prototype.actions = function (system) {
 	var self = this;
 	self.system.emit('instance_actions', self.id, {
-		'start':	{
+		'start': {
 			label: 'Start (cue)',
 			options: [
 				{
@@ -774,7 +813,7 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'prewait_dec':	{
+		'prewait_dec': {
 			label: 'Decrease Prewait',
 			options: [
 				{
@@ -785,7 +824,7 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'prewait_inc':	{
+		'prewait_inc': {
 			label: 'Increase Prewait',
 			options: [
 				{
@@ -796,7 +835,7 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'postwait_dec':	{
+		'postwait_dec': {
 			label: 'Decrease Postwait',
 			options: [
 				{
@@ -807,7 +846,7 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'postwait_inc':	{
+		'postwait_inc': {
 			label: 'Increase Postwait',
 			options: [
 				{
@@ -818,7 +857,7 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'duration_dec':	{
+		'duration_dec': {
 			label: 'Decrease Duration',
 			options: [
 				{
@@ -829,7 +868,7 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'duration_inc':	{
+		'duration_inc': {
 			label: 'Increase Duration',
 			options: [
 				{
@@ -840,7 +879,7 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'continue':	{
+		'continue': {
 			label: 'Set Continue Mode',
 			options: [
 				{
@@ -851,40 +890,40 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'arm':	{
+		'arm': {
 			label: 'Arm/Disarm Cue',
 			options: [
 				{
 					type: 'dropdown',
 					label: 'Arm/Disarm',
 					id: 'armId',
-					choices: [ { id: '0', label: 'Disarm' }, { id: '1', label: 'Arm' } ]
+					choices: [{ id: '0', label: 'Disarm' }, { id: '1', label: 'Arm' }]
 				}
 			]
 		},
-		'autoload':	{
+		'autoload': {
 			label: 'Enable/Disable Cue Autoload ',
 			options: [
 				{
 					type: 'dropdown',
 					label: 'Autoload',
 					id: 'autoId',
-					choices: [ { id: '0', label: 'Disable' }, { id: '1', label: 'Enable' } ]
+					choices: [{ id: '0', label: 'Disable' }, { id: '1', label: 'Enable' }]
 				}
 			]
 		},
-		'flagged':	{
+		'flagged': {
 			label: 'Flagged/Unflagged Cue',
 			options: [
 				{
 					type: 'dropdown',
 					label: 'Flagged',
 					id: 'flaggId',
-					choices: [ { id: '0', label: 'Disable' }, { id: '1', label: 'Enable' } ]
+					choices: [{ id: '0', label: 'Disable' }, { id: '1', label: 'Enable' }]
 				}
 			]
 		},
-		'cueColor':	{
+		'cueColor': {
 			label: 'Set Selected Cue Color',
 			options: [
 				{
@@ -899,201 +938,196 @@ instance.prototype.actions = function(system) {
 
 
 
-		'go':       { label: 'GO' },
-		'pause':    { label: 'Pause' },
-		'stop':     { label: 'Stop' },
-		'panic':    { label: 'Panic' },
-		'reset':    { label: 'Reset' },
+		'go': { label: 'GO' },
+		'pause': { label: 'Pause' },
+		'stop': { label: 'Stop' },
+		'panic': { label: 'Panic' },
+		'reset': { label: 'Reset' },
 		'previous': { label: 'Previous Cue' },
-		'next':     { label: 'Next Cue' },
-		'resume':   { label: 'Resume' },
-		'load':     { label: 'Load Cue'}
+		'next': { label: 'Next Cue' },
+		'resume': { label: 'Resume' },
+		'load': { label: 'Load Cue' },
+		'preview': { label: 'Preview' }
 	});
-}
+};
 
-instance.prototype.action = function(action) {
+instance.prototype.action = function (action) {
 	var self = this;
 	var opt = action.options;
 	var cmd;
+	var arg;
 	var workspace = '/workspace/' + self.config.workspace;
-	var passcode = 	{
+	var passcode = {
 		type: "s", value: self.config.passcode || ""
 	};
 
 	switch (action.action) {
 
 		case 'start':
-			arg = null
-			cmd = '/cue/'+ opt.cue + '/start';
+			arg = null;
+			cmd = '/cue/' + opt.cue + '/start';
 			break;
 
 		case 'go':
-			arg = null
+			arg = null;
 			cmd = '/go';
 			break;
 
+		case 'preview':
+			arg = null;
+			cmd = '/cue/selected/preview';
+			break;
+
 		case 'pause':
-			arg = null
+			arg = null;
 			cmd = '/pause';
 			break;
 
 		case 'stop':
-			arg = null
+			arg = null;
 			cmd = '/stop';
 			break;
 
 		case 'panic':
-			arg = null
+			arg = null;
 			cmd = '/panic';
 			break;
 
 		case 'reset':
-			arg = null
+			arg = null;
 			cmd = '/reset';
 			break;
 
 		case 'previous':
-			arg = null
+			arg = null;
 			cmd = '/playhead/previous';
 			break;
 
 		case 'next':
-			arg = null
+			arg = null;
 			cmd = '/playhead/next';
 			break;
 
 		case 'resume':
-			arg = null
+			arg = null;
 			cmd = '/resume';
 			break;
 
 		case 'load':
-			arg = null
+			arg = null;
 			cmd = '/cue/selected/load';
 			break;
 
 		case 'prewait_dec':
-			var arg = {
+			arg = {
 				type: "i",
 				value: parseInt(opt.time)
-			}
+			};
 			cmd = '/cue/selected/preWait/-';
 			break;
 
 		case 'prewait_inc':
-			var arg = {
+			arg = {
 				type: "i",
 				value: parseInt(opt.time)
-				}
+			};
 			cmd = '/cue/selected/preWait/+';
 			break;
 
 		case 'postwait_dec':
-			var arg = {
+			arg = {
 				type: "i",
 				value: parseInt(opt.time)
-			}
+			};
 			cmd = '/cue/selected/postWait/-';
 			break;
 
 		case 'postwait_inc':
-			var arg = {
+			arg = {
 				type: "i",
 				value: parseInt(opt.time)
-			}
+			};
 			cmd = '/cue/selected/postWait/+';
 			break;
 
 		case 'duration_dec':
-			var arg = {
+			arg = {
 				type: "i",
 				value: parseInt(opt.time)
-			}
+			};
 			cmd = '/cue/selected/duration/-';
 			break;
 
 		case 'duration_inc':
-			var arg = {
+			arg = {
 				type: "i",
 				value: parseInt(opt.time)
-			}
+			};
 			cmd = '/cue/selected/duration/+';
 			break;
 
 		case 'continue':
-			var arg = {
+			arg = {
 				type: "i",
 				value: parseInt(opt.contId)
-			}
+			};
 			cmd = '/cue/selected/continueMode';
 			break;
 
 		case 'arm':
-			var arg = {
+			arg = {
 				type: "i",
 				value: parseInt(opt.armId)
-			}
+			};
 			cmd = '/cue/selected/armed';
 			break;
 
 		case 'autoload':
-			var arg = {
+			arg = {
 				type: "i",
 				value: parseInt(opt.autoId)
-			}
+			};
 			cmd = '/cue/selected/autoLoad';
 			break;
 
 		case 'flagged':
-			var arg = {
+			arg = {
 				type: "i",
 				value: parseInt(opt.flaggId)
-			}
+			};
 			cmd = '/cue/selected/flagged';
 			break;
 
 		case 'cueColor':
-			var arg = {
+			arg = {
 				type: "s",
 				value: "" + opt.colorId
-			}
+			};
 			cmd = '/cue/selected/colorName';
 			break;
 
-
-
-	};
-	if (self.config.workspace == 'default'){
-		if (cmd !== undefined && arg !== null)  {
-			debug('sending',cmd,arg,"to",self.config.host);
-			if (self.config.passcode !== undefined && self.config.passcode !== "") {
-				self.system.emit('osc_send', self.config.host, 53000, "/connect", [ passcode ]);
-			 }
-			self.system.emit('osc_send', self.config.host, 53000, cmd, [arg])
-		}
-		else if (cmd !== undefined && arg == null)  {
-			debug('sending',cmd,"to",self.config.host);
-			if (self.config.passcode !== undefined && self.config.passcode !== "") {
-				self.system.emit('osc_send', self.config.host, 53000, "/connect", [ passcode ]);
-			 }
-			self.system.emit('osc_send', self.config.host, 53000, cmd, [])
-		}
 	}
-	else if (self.config.workspace !== undefined) {
-		if (cmd !== undefined && arg !== null)  {
-			debug('sending',workspace + cmd,arg,"to",self.config.host);
-			if (self.config.passcode !== undefined && self.config.passcode !== "") {
-				self.system.emit('osc_send', self.config.host, 53000, "/connect", [ passcode ]);
-			 }
-			self.system.emit('osc_send', self.config.host, 53000,workspace + cmd, [arg])
+
+	var ws = "";
+	if (self.config.workspace !== undefined && self.config.workspace !== 'default' && self.config.workspace !== '') {
+		ws = workspace;
+	}
+
+	if (arg == null) {
+		arg = [];
+	}
+
+	var host = "255.255.255.255";
+	if (self.config.host !== undefined && self.config.host !== '') {
+		host = self.config.host;
+	}
+
+	if (cmd !== undefined) {
+		debug('sending', ws + cmd, arg, "to", host, ":53000");
+		if (self.config.passcode !== undefined && self.config.passcode !== "") {
+			self.system.emit('osc_send', host, 53000, "/connect", [passcode]);
 		}
-		else if (cmd !== undefined && arg == null)  {
-			debug('sending',workspace + cmd,"to",self.config.host);
-			if (self.config.passcode !== undefined && self.config.passcode !== "") {
-				self.system.emit('osc_send', self.config.host, 53000, "/connect", [ passcode ]);
-			 }
-			self.system.emit('osc_send', self.config.host, 53000,workspace + cmd, [])
-		}
+		self.system.emit('osc_send', host, 53000, ws + cmd, arg);
 	}
 };
 
