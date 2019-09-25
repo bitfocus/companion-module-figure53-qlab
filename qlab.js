@@ -1079,7 +1079,7 @@ instance.prototype.action = function(action) {
 			self.system.emit('osc_send', self.config.host, 53000, cmd, [])
 		}
 	}
-	else {
+	else if (self.config.workspace !== undefined) {
 		if (cmd !== undefined && arg !== null)  {
 			debug('sending',workspace + cmd,arg,"to",self.config.host);
 			if (self.config.passcode !== undefined && self.config.passcode !== "") {
