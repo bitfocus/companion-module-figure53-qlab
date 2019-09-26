@@ -16,6 +16,7 @@ We currently support the following actions:
 * **Next:** Move the selection down one cue.
 * **Previous:** Move the selection up one cue.
 * **Start (cue):** Start the specified cue. If the specified cue is playing, this command has no effect.
+* **Preview:** Preview the selected cue without moving the Playhead.
 * **Increase Prewait:** Increases the prewait time by given time for the selected cue
 * **Decrease Prewait:** Decreases the prewait time by given time for the selected cue
 * **Increase postwait:** Increases the postwait time by given time for the selected cue
