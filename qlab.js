@@ -1117,7 +1117,7 @@ instance.prototype.action = function (action) {
 		arg = [];
 	}
 
-	var host = "255.255.255.255";
+	var host = "";
 	if (self.config.host !== undefined && self.config.host !== '') {
 		host = self.config.host;
 	}
