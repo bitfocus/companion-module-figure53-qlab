@@ -94,11 +94,13 @@ instance.prototype.init_presets = function () {
 			category: 'CueList',
 			label: 'Pause / Resume',
 			bank: {
-				style: 'text',
-				text: 'Pause',
+				style: 'png',
+				text: '',
+				png64: self.ICON_PAUSE_INACTIVE,
+				pngalignment: 'center:center',
 				size: '18',
-				color: self.rgb(0, 0, 0),
-				bgcolor: self.rgb(255, 255, 0),
+				color: self.rgb(255,255,255),
+				bgcolor: self.rgb(0, 0, 0),
 
 			},
 			actions: [
@@ -111,11 +113,13 @@ instance.prototype.init_presets = function () {
 			category: 'CueList',
 			label: 'GO',
 			bank: {
-				style: 'text',
-				text: 'GO',
-				size: '30',
-				color: self.rgb(0, 0, 0),
-				bgcolor: self.rgb(0, 255, 0)
+				style: 'png',
+				text: '',
+				png64: self.ICON_PLAY_INACTIVE,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0,0,0),
 			},
 			actions: [
 				{
@@ -143,11 +147,13 @@ instance.prototype.init_presets = function () {
 			category: 'CueList',
 			label: 'Stop',
 			bank: {
-				style: 'text',
-				text: 'Stop',
-				size: '30',
+				style: 'png',
+				text: '',
+				png64: self.ICON_STOP_INACTIVE,
+				pngalignment: 'center:center',
+				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(255, 0, 0)
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
@@ -207,11 +213,13 @@ instance.prototype.init_presets = function () {
 			category: 'CueList',
 			label: 'Previous Cue',
 			bank: {
-				style: 'text',
-				text: 'Prev\\nCue',
-				size: '24',
+				style: 'png',
+				text: '',
+				png64: self.ICON_REW_INACTIVE,
+				pngalignment: 'center:center',
+				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0, 0, 100)
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
@@ -223,11 +231,12 @@ instance.prototype.init_presets = function () {
 			category: 'CueList',
 			label: 'Next Cue',
 			bank: {
-				style: 'text',
-				text: 'Next\\nCue',
-				size: '24',
+				style: 'png',
+				text: '',
+				png64: self.ICON_FWD_INACTIVE,
+				pngalignment: 'center:center',
+				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0, 0, 100)
 			},
 			actions: [
 				{
