@@ -1,5 +1,8 @@
 {
-	"name": "qlab",
+	"name": "figure53-qlab",
+	"legacy": [
+		"qlab"
+	],
 	"version": "1.2.3",
 	"api_version": "1.0.0",
 	"keywords": [
