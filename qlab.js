@@ -826,6 +826,7 @@ instance.prototype.actions = function (system) {
 					type: 'textinput',
 					label: 'Time in seconds',
 					id: 'time',
+					regex: self.REGEX_FLOAT,
 					default: "1"
 				}
 			]
@@ -837,6 +838,7 @@ instance.prototype.actions = function (system) {
 					type: 'textinput',
 					label: 'Time in seconds',
 					id: 'time',
+					regex: self.REGEX_FLOAT,
 					default: "1"
 				}
 			]
@@ -848,6 +850,7 @@ instance.prototype.actions = function (system) {
 					type: 'textinput',
 					label: 'Time in seconds',
 					id: 'time',
+					regex: self.REGEX_FLOAT,
 					default: "1"
 				}
 			]
@@ -859,6 +862,7 @@ instance.prototype.actions = function (system) {
 					type: 'textinput',
 					label: 'Time in seconds',
 					id: 'time',
+					regex: self.REGEX_FLOAT,
 					default: "1"
 				}
 			]
@@ -870,6 +874,7 @@ instance.prototype.actions = function (system) {
 					type: 'textinput',
 					label: 'Time in seconds',
 					id: 'time',
+					regex: self.REGEX_FLOAT,
 					default: "1"
 				}
 			]
@@ -881,6 +886,7 @@ instance.prototype.actions = function (system) {
 					type: 'textinput',
 					label: 'Time in seconds',
 					id: 'time',
+					regex: self.REGEX_FLOAT,
 					default: "1"
 				}
 			]
@@ -966,6 +972,18 @@ instance.prototype.action = function (action) {
 	var passcode = {
 		type: "s", value: self.config.passcode || ""
 	};
+	var optTime;
+	var typeTime;
+
+	// if this is a +/- time action, preformat seconds arg
+	if (opt != undefined && opt.time != undefined) {
+		optTime = parseFloat(opt.time);
+		if (optTime.isInteger) {
+			typeTime = 'i';
+		} else {
+			typeTime = 'f';
+		}
+	}
 
 	switch (action.action) {
 
@@ -1026,48 +1044,48 @@ instance.prototype.action = function (action) {
 
 		case 'prewait_dec':
 			arg = {
-				type: "i",
-				value: parseInt(opt.time)
+				type: typeTime,
+				value: optTime
 			};
 			cmd = '/cue/selected/preWait/-';
 			break;
 
 		case 'prewait_inc':
 			arg = {
-				type: "i",
-				value: parseInt(opt.time)
+				type: typeTime,
+				value: optTime
 			};
 			cmd = '/cue/selected/preWait/+';
 			break;
 
 		case 'postwait_dec':
 			arg = {
-				type: "i",
-				value: parseInt(opt.time)
+				type: typeTime,
+				value: optTime
 			};
 			cmd = '/cue/selected/postWait/-';
 			break;
 
 		case 'postwait_inc':
 			arg = {
-				type: "i",
-				value: parseInt(opt.time)
+				type: typeTime,
+				value: optTime
 			};
 			cmd = '/cue/selected/postWait/+';
 			break;
 
 		case 'duration_dec':
 			arg = {
-				type: "i",
-				value: parseInt(opt.time)
+				type: typeTime,
+				value: optTime
 			};
 			cmd = '/cue/selected/duration/-';
 			break;
 
 		case 'duration_inc':
 			arg = {
-				type: "i",
-				value: parseInt(opt.time)
+				type: typeTime,
+				value: optTime
 			};
 			cmd = '/cue/selected/duration/+';
 			break;
