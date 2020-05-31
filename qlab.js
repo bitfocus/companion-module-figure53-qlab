@@ -493,6 +493,160 @@ instance.prototype.init_presets = function () {
 
 		{
 			category: 'Edit',
+			label: 'Start Time Dec 1 sec',
+			bank: {
+				style: 'text',
+				text: 'Start Time\\nDecrease\\n1 sec',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 100)
+			},
+			actions: [
+				{
+					action: 'startTime_dec',
+					options: {
+						time: '1',
+					}
+				}
+			]
+		},
+		{
+			category: 'Edit',
+			label: 'Start Time Dec 10 sec',
+			bank: {
+				style: 'text',
+				text: 'Start Time\\nDecrease\\n10 sec',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 100)
+			},
+			actions: [
+				{
+					action: 'startTime_dec',
+					options: {
+						time: '10',
+					}
+				}
+			]
+		},
+		{
+			category: 'Edit',
+			label: 'Start Time Inc 1 sec',
+			bank: {
+				style: 'text',
+				text: 'Start Time\\nIncrease\\n1 sec',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 100)
+			},
+			actions: [
+				{
+					action: 'startTime_inc',
+					options: {
+						time: '1',
+					}
+				}
+			]
+		},
+		{
+			category: 'Edit',
+			label: 'Start Time Inc 10 sec',
+			bank: {
+				style: 'text',
+				text: 'Start Time\\nIncrease\\n10 sec',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 100)
+			},
+			actions: [
+				{
+					action: 'startTime_inc',
+					options: {
+						time: '10',
+					}
+				}
+			]
+		},
+
+		{
+			category: 'Edit',
+			label: 'End Time Dec 1 sec',
+			bank: {
+				style: 'text',
+				text: 'End Time\\nDecrease\\n1 sec',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 100)
+			},
+			actions: [
+				{
+					action: 'endTime_dec',
+					options: {
+						time: '1',
+					}
+				}
+			]
+		},
+		{
+			category: 'Edit',
+			label: 'End Time Dec 10 sec',
+			bank: {
+				style: 'text',
+				text: 'End Time\\nDecrease\\n10 sec',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 100)
+			},
+			actions: [
+				{
+					action: 'endTime_dec',
+					options: {
+						time: '10',
+					}
+				}
+			]
+		},
+		{
+			category: 'Edit',
+			label: 'End Time Inc 1 sec',
+			bank: {
+				style: 'text',
+				text: 'End Time\\nIncrease\\n1 sec',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 100)
+			},
+			actions: [
+				{
+					action: 'endTime_inc',
+					options: {
+						time: '1',
+					}
+				}
+			]
+		},
+		{
+			category: 'Edit',
+			label: 'End Time Inc 10 sec',
+			bank: {
+				style: 'text',
+				text: 'End Time\\nIncrease\\n10 sec',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 100)
+			},
+			actions: [
+				{
+					action: 'endTime_inc',
+					options: {
+						time: '10',
+					}
+				}
+			]
+		},
+
+		{
+			category: 'Edit',
 			label: 'Continue Mode DNC',
 			bank: {
 				style: 'text',
@@ -891,6 +1045,54 @@ instance.prototype.actions = function (system) {
 				}
 			]
 		},
+		'startTime_dec': {
+			label: 'Decrease Start Time',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Time in seconds',
+					id: 'time',
+					regex: self.REGEX_FLOAT,
+					default: "1"
+				}
+			]
+		},
+		'startTime_inc': {
+			label: 'Increase Start Time',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Time in seconds',
+					id: 'time',
+					regex: self.REGEX_FLOAT,
+					default: "1"
+				}
+			]
+		},
+		'endTime_dec': {
+			label: 'Decrease End Time',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Time in seconds',
+					id: 'time',
+					regex: self.REGEX_FLOAT,
+					default: "1"
+				}
+			]
+		},
+		'endTime_inc': {
+			label: 'Increase End Time',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Time in seconds',
+					id: 'time',
+					regex: self.REGEX_FLOAT,
+					default: "1"
+				}
+			]
+		},
 		'continue': {
 			label: 'Set Continue Mode',
 			options: [
@@ -1088,6 +1290,38 @@ instance.prototype.action = function (action) {
 				value: optTime
 			};
 			cmd = '/cue/selected/duration/+';
+			break;
+		
+		case 'startTime_inc':
+			arg = {
+				type: typeTime,
+				value: optTime
+			};
+			cmd = '/cue/selected/startTime/+';
+			break;
+			
+		case 'startTime_dec':
+			arg = {
+				type: typeTime,
+				value: optTime
+			};
+			cmd = '/cue/selected/startTime/-';
+			break;
+
+		case 'endTime_inc':
+			arg = {
+				type: typeTime,
+				value: optTime
+			};
+			cmd = '/cue/selected/endTime/+';
+			break;
+
+		case 'endTime_dec':
+			arg = {
+				type: typeTime,
+				value: optTime
+			};
+			cmd = '/cue/selected/endTime/-';
 			break;
 
 		case 'continue':
