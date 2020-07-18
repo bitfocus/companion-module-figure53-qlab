@@ -23,6 +23,10 @@ We currently support the following actions:
 * **Decrease postwait:** Decreases the postwait time by given time for the selected cue
 * **Increase duration:** Increases the duration time by given time for the selected cue
 * **Decrease duration:** Decreases the duration time by given time for the selected cue
+* **Increase Start Time:** Increases the start time by given time for the selected cue
+* **Decrease Start Time:** Decreases the start time by given time for the selected cue
+* **Increase End Time:** Increases the end time by given time for the selected cue
+* **Decrease End Time:** Decreases the end time by given time for the selected cue
 * **Set/Unset Arm:** Set / Unset the Arm property of the selected cue
 * **Set/Unset Autoload:** Set / Unset the Autoload property of the selected cue
 * **Set Continue Mode:** Sets the continue mode of the selected cue
