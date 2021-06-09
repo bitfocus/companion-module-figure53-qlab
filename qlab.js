@@ -11,28 +11,31 @@ function instance(system, id, config) {
 	self.actions();
 	self.init_presets();
 
-	self.addUpgradeScript(function (config, actions) {
-		var changed = false;
+	return self;
+}
 
-		for (var k in actions) {
-			var action = actions[k];
+instance.GetUpgradeScripts = function() {
+	return [
+		function (context, config, actions, feedbacks) {
+			var changed = false;
 
-			// some prior button actions were created
-			// from a preset with a case typo
-			if (action.action == "autoLoad") {
-				if (action.options.autoId == 1) {
-					action.action = "autoload";
-					action.label = action.id + ":" + action.action;
-					changed = true;
+			for (var k in actions) {
+				var action = actions[k];
+
+				// some prior button actions were created
+				// from a preset with a case typo
+				if (action.action == "autoLoad") {
+					if (action.options.autoId == 1) {
+						action.action = "autoload";
+						changed = true;
+					}
 				}
+
 			}
 
+			return changed;
 		}
-
-		return changed;
-	});
-
-	return self;
+	]
 }
 
 instance.prototype.updateConfig = function (config) {
