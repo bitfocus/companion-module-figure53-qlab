@@ -61,7 +61,7 @@ instance.prototype.config_fields = function () {
 			id: 'info',
 			width: 12,
 			label: 'Information',
-			value: 'This module controls Qlab by <a href="https://figure53.com/" target="_new">Figure 53</a>.'
+			value: 'This module controls <a href="https://qlab.app/" target="_blank" rel="noopener noreferrer">QLab</a> by <a href="https://figure53.com/" target="_blank" rel="noopener noreferrer">Figure 53</a>.'
 		},
 		{
 			type: 'textinput',
@@ -74,9 +74,9 @@ instance.prototype.config_fields = function () {
 		{
 			type: 'textinput',
 			id: 'passcode',
-			label: 'OSC Pascode',
+			label: 'OSC Passcode',
 			width: 12,
-			tooltip: 'The passcode for controling QLab, leave blank if not set any'
+			tooltip: 'The passcode for controlling QLab, leave blank if not set any'
 		},
 		{
 			type: 'textinput',

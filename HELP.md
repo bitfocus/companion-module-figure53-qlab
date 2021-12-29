@@ -4,7 +4,7 @@ What does QLab do?
 QLab makes it simple to create intricate designs of light, sound, and video, which you play back during a live performance.
 QLab allows you to lock in exactly how you want the light, sound, and video to play during your performance. When you’re done designing, you'll switch to “show mode” and run your show just by pressing “GO”.
 
-Go over to [figure 53](https://figure53.com/) and checkout the software.
+Go over to [Figure 53](https://figure53.com/) and checkout the software.
 
 We currently support the following actions:
 * **Go:** Tell the current cue list of the given workspace to GO.
@@ -32,10 +32,10 @@ We currently support the following actions:
 * **Set Continue Mode:** Sets the continue mode of the selected cue
 * **Set Cue Color:** Sets the color of the selected cue
 
-for additional actions please raise a feature request at [github](https://github.com/bitfocus/companion)
+for additional actions please raise a feature request at [GitHub](https://github.com/bitfocus/companion)
 
 ### OSC
 Sends OSC commands to port 53000.
 
-From Qlab preferences OSC controls tab make sure you have the "Use OSC controls" checkbox ticked.
-![Qlab](images/qlab.jpg?raw=true "Qlab")
+From QLab preferences OSC controls tab make sure you have the "Use OSC controls" checkbox ticked.
+![QLab](images/qlab.jpg?raw=true "QLab")

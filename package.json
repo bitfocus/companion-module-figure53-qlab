@@ -12,7 +12,7 @@
 	"manufacturer": "Figure 53",
 	"product": "QLab",
 	"shortname": "qlab",
-	"description": "Qlab plugin for Companion",
+	"description": "QLab plugin for Companion",
 	"main": "qlab.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
