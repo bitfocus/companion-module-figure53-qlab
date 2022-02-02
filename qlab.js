@@ -964,7 +964,7 @@ instance.prototype.colorName = [
 // eslint-disable-next-line no-unused-vars
 instance.prototype.actions = function (system) {
 	var self = this;
-	self.system.emit('instance_actions', self.id, {
+	self.setActions({
 		'start': {
 			label: 'Start (cue)',
 			options: [
@@ -1386,9 +1386,9 @@ instance.prototype.action = function (action) {
 	if (cmd !== undefined) {
 		debug('sending', ws + cmd, arg, "to", host, ":53000");
 		if (self.config.passcode !== undefined && self.config.passcode !== "") {
-			self.system.emit('osc_send', host, 53000, "/connect", [passcode]);
+			self.oscSend(host, 53000, "/connect", [passcode]);
 		}
-		self.system.emit('osc_send', host, 53000, ws + cmd, arg);
+		self.oscSend(host, 53000, ws + cmd, arg);
 	}
 };
 
