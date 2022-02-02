@@ -18,5 +18,13 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "Per Røine <per.roine@gmail.com>",
-	"license": "MIT"
+	"license": "MIT",
+	"homepage": "https://github.com/bitfocus/companion-module-figure53-qlab#readme",
+	"bugs": {
+		"url": "https://github.com/bitfocus/companion-module-figure53-qlab/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bitfocus/companion-module-figure53-qlab.git"
+	}
 }
